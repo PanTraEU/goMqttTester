@@ -1,8 +1,0 @@
-{
-  "UseAuth" : true,
-  "mqttUser": "cserver",
-  "mqttPassword": "217de283d662df4479e8037be89b2dfd0a3864816b40ed4a429f93415ba75a65f107baf2ea2015f7467c29bbe7fb6aed1057bebe225af77fb1390be643bd6b1e",
-  "mqttHost" : "ssl://mqtt.pantra.eu:8883",
-  "topic" : "cserver/tests",
-  "UseTls" : true
-}

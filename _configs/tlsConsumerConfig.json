@@ -1,8 +1,0 @@
-{
-  "UseAuth" : true,
-  "mqttUser": "esp32",
-  "mqttPassword": "8ca0a0f8bbd7a77f15a2fe528580d37b6949204aded2c5f3d3c365ff89243a70",
-  "mqttHost" : "ssl://mqtt.pantra.eu:8883",
-  "topic" : "cserver/tests",
-  "UseTls" : true
-}

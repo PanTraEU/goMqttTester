@@ -1,8 +1,0 @@
-{
-  "UseAuth" : false,
-  "mqttUser": "",
-  "mqttPassword": "",
-  "mqttHost" : "tcp://localhost:1883",
-  "topic" : "cserver/tests",
-  "UseTls" : false
-}
