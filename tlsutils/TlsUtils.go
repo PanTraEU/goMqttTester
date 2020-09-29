@@ -1,13 +1,16 @@
 package TlsUtils
 
 import (
+	"../configUtil"
 	"crypto/tls"
 	"crypto/x509"
+	mqtt "github.com/eclipse/paho.mqtt.golang"
 	"io/ioutil"
 	"log"
+	"time"
 )
 
-func NewTLSConfig() *tls.Config {
+func newTLSConfig() *tls.Config {
 	// Import trusted certificates from CAfile.pem.
 	// Alternatively, manually add CA certificates to
 	// default openssl CA bundle.
@@ -53,4 +56,22 @@ func NewTLSConfig() *tls.Config {
 		// Certificates = list of certs client sends to server.
 		Certificates: []tls.Certificate{cert},
 	}
+}
+
+func MqttOpts(mqttHost string, prodId string, conf configUtil.Configuration, cleanSession bool) *mqtt.ClientOptions {
+	optsProd := mqtt.NewClientOptions().
+		AddBroker(mqttHost).
+		SetClientID(prodId).
+		SetAutoReconnect(true)
+	optsProd.SetCleanSession(cleanSession)
+	optsProd.SetKeepAlive(2 * time.Second)
+	optsProd.SetPingTimeout(1 * time.Second)
+	if conf.UseAuth {
+		optsProd.SetUsername(conf.MqttUser)
+		optsProd.SetPassword(conf.MqttPassword)
+	}
+	if conf.UseTls {
+		optsProd.SetTLSConfig(newTLSConfig())
+	}
+	return optsProd
 }

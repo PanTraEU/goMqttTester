@@ -8,7 +8,6 @@ import (
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 	"github.com/gofiber/utils"
 	"log"
-	"time"
 )
 
 func main() {
@@ -22,20 +21,8 @@ func main() {
 	producerTopic := conf.Topic
 	prodId := "test_producer_1"
 
-	optsProd := mqtt.NewClientOptions().
-		AddBroker(mqttHost).
-		SetClientID(prodId).
-		SetAutoReconnect(true)
-	optsProd.SetCleanSession(true)
-	optsProd.SetKeepAlive(2 * time.Second)
-	optsProd.SetPingTimeout(1 * time.Second)
-	if conf.UseAuth {
-		optsProd.SetUsername(conf.MqttUser)
-		optsProd.SetPassword(conf.MqttPassword)
-	}
-	if conf.UseTls {
-		optsProd.SetTLSConfig(TlsUtils.NewTLSConfig())
-	}
+	optsProd := TlsUtils.MqttOpts(mqttHost, prodId, conf, true)
+
 	prodClient := mqtt.NewClient(optsProd)
 	if token := prodClient.Connect(); token.Wait() && token.Error() != nil {
 		panic(token.Error())

@@ -30,22 +30,9 @@ func main() {
 	producerTopic := conf.Topic
 	conId := consumerId
 
-	optsConsumer := mqtt.NewClientOptions().
-		AddBroker(mqttHost).
-		SetClientID(conId).
-		SetAutoReconnect(true)
-	optsConsumer.SetCleanSession(false)
-	optsConsumer.SetKeepAlive(2 * time.Second)
-	optsConsumer.SetPingTimeout(1 * time.Second)
-	if conf.UseAuth {
-		optsConsumer.SetUsername(conf.MqttUser)
-		optsConsumer.SetPassword(conf.MqttPassword)
-	}
-	if conf.UseTls {
-		optsConsumer.SetTLSConfig(TlsUtils.NewTLSConfig())
-	}
-	consumerClient := mqtt.NewClient(optsConsumer)
+	optsConsumer := TlsUtils.MqttOpts(mqttHost, conId, conf, false)
 
+	consumerClient := mqtt.NewClient(optsConsumer)
 	if token := consumerClient.Connect(); token.Wait() && token.Error() != nil {
 		panic(token.Error())
 	}
