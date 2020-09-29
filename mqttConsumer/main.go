@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-var f mqtt.MessageHandler = func(client mqtt.Client, msg mqtt.Message) {
+var newMsgHandler mqtt.MessageHandler = func(client mqtt.Client, msg mqtt.Message) {
 	reader := client.OptionsReader()
 	clientId := reader.ClientID()
 	fmt.Printf("client_id: %s\t\ttopic: %s\t\t\"message: %s\t\tqos: %d\n", clientId, msg.Topic(), msg.Payload(), msg.Qos())
@@ -52,7 +52,7 @@ func main() {
 
 	if mode != "init" {
 		fmt.Printf("consumer clientId : %s\t\ttopic: %s\n", conId, producerTopic)
-		consumerClient.Subscribe(producerTopic, 2, f)
+		consumerClient.Subscribe(producerTopic, 2, newMsgHandler)
 		time.Sleep(2 * time.Second)
 	} else {
 		fmt.Printf("init clientId: %s\n", conId)
