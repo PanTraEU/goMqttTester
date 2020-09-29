@@ -6,7 +6,6 @@ import (
 	"flag"
 	"fmt"
 	mqtt "github.com/eclipse/paho.mqtt.golang"
-	"time"
 )
 
 var newMsgHandler mqtt.MessageHandler = func(client mqtt.Client, msg mqtt.Message) {
@@ -40,7 +39,6 @@ func main() {
 	if mode != "init" {
 		fmt.Printf("consumer clientId : %s\t\ttopic: %s\n", conId, producerTopic)
 		consumerClient.Subscribe(producerTopic, 2, newMsgHandler)
-		time.Sleep(2 * time.Second)
 	} else {
 		fmt.Printf("init clientId: %s\n", conId)
 
