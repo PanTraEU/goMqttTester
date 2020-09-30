@@ -9,15 +9,26 @@ go run mqttConsumer/main.go -c="./configs/tlsConsumerConfig.json" -cid=con3 -m=i
 go run mqttConsumer/main.go -c="./configs/tlsConsumerConfig.json" -cid=con4 -m=init
 echo "-----------------------------------------------------"
 
+#sleep 5
+#
+#echo "-----------------------------------------------------"
+#echo "run producer"
+#echo "-----------------------------------------------------"
+#go run mqttProducer/main.go -c="./configs/tlsProducerConfig.json"
+#echo "-----------------------------------------------------"
+
 sleep 5
 
 echo "-----------------------------------------------------"
-echo "run producer"
+echo "run consumer"
 echo "-----------------------------------------------------"
-go run mqttProducer/main.go -c="./configs/tlsProducerConfig.json"
+go run mqttConsumer/main.go -c="./configs/tlsConsumerConfig.json" -cid=con1 -m=consume
+go run mqttConsumer/main.go -c="./configs/tlsConsumerConfig.json" -cid=con2 -m=consume
+go run mqttConsumer/main.go -c="./configs/tlsConsumerConfig.json" -cid=con3 -m=consume
+go run mqttConsumer/main.go -c="./configs/tlsConsumerConfig.json" -cid=con4 -m=consume
 echo "-----------------------------------------------------"
 
-sleep 5
+sleep 15
 
 echo "-----------------------------------------------------"
 echo "run consumer"
