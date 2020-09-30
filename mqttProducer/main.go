@@ -28,7 +28,7 @@ func main() {
 		panic(token.Error())
 	}
 
-	counter := 1
+	var counter uint64 = 0
 	for true {
 		text := fmt.Sprintf("%d", counter)
 		token := prodClient.Publish(producerTopic, 2, false, text)
