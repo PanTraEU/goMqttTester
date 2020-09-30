@@ -6,8 +6,8 @@ import (
 	"flag"
 	"fmt"
 	mqtt "github.com/eclipse/paho.mqtt.golang"
-	"github.com/gofiber/utils"
 	"log"
+	"time"
 )
 
 func main() {
@@ -28,12 +28,16 @@ func main() {
 		panic(token.Error())
 	}
 
-	// sending 10 messages
-	for i := 0; i < 5; i++ {
-		text := string(utils.UUID())
+	counter := 1
+	for true {
+		text := fmt.Sprintf("%d", counter)
 		token := prodClient.Publish(producerTopic, 2, false, text)
 		token.Wait()
+
 		log.Println(fmt.Sprintf("send new daykey: %s", text))
+		time.Sleep(2 * time.Second)
+		counter++
 	}
-	prodClient.Disconnect(250)
+
+	defer prodClient.Disconnect(250)
 }

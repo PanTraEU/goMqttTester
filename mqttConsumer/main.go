@@ -6,6 +6,7 @@ import (
 	"flag"
 	"fmt"
 	mqtt "github.com/eclipse/paho.mqtt.golang"
+	"time"
 )
 
 var newMsgHandler mqtt.MessageHandler = func(client mqtt.Client, msg mqtt.Message) {
@@ -15,6 +16,7 @@ var newMsgHandler mqtt.MessageHandler = func(client mqtt.Client, msg mqtt.Messag
 }
 
 func main() {
+
 	var configFile string
 	flag.StringVar(&configFile, "c", "config.json", "Specify config file. Default is 'config.json'.")
 	var consumerId string
@@ -39,6 +41,7 @@ func main() {
 	if mode != "init" {
 		fmt.Printf("consumer clientId : %s\t\ttopic: %s\n", conId, producerTopic)
 		consumerClient.Subscribe(producerTopic, 2, newMsgHandler)
+		time.Sleep(2 * time.Second)
 	} else {
 		fmt.Printf("init clientId: %s\n", conId)
 
